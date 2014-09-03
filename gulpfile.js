@@ -28,24 +28,34 @@ gulp.task('scss', function() {
 });
 
 // Concat JS Files
-gulp.task('concat', function() {
-    return gulp.src([
-            'dev/src/framework/foundation/js/vendor/modernizr.js',
-            'dev/src/framework/foundation/js/foundation/foundation.js',
-            'dev/src/framework/foundation/js/foundation/foundation.alert.js',
-            'dev/src/framework/foundation/js/foundation/foundation.offcanvas.js',
-            'dev/src/framework/foundation/js/foundation/foundation.reveal.js',
-            'dev/src/framework/foundation/js/foundation/foundation.tooltip.js',
-            'dev/src/js/*.js'])
-        .pipe(concat('fauxghost.js'))
-        .pipe(gulp.dest('dev/dest/js'))
-        .pipe(uglify())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('packages/theme/assets/js'))
-        .pipe(notify({message: 'JavaScript Files Compiled & Compressed Successfully'}));
+gulp.task('js', function() {
+    return eventstream.concat (
+      gulp.src([
+              'dev/src/framework/foundation/js/vendor/modernizr.js',
+              'dev/src/framework/foundation/js/foundation/foundation.js',
+              'dev/src/framework/foundation/js/foundation/foundation.alert.js',
+              'dev/src/framework/foundation/js/foundation/foundation.offcanvas.js',
+              'dev/src/framework/foundation/js/foundation/foundation.reveal.js',
+              'dev/src/framework/foundation/js/foundation/foundation.tooltip.js',
+              'dev/src/js/fauxGhost/fauxGhost.js',
+              'dev/src/js/thirdParty/*.js'])
+          .pipe(concat('fauxghost.js'))
+          .pipe(gulp.dest('dev/dest/js'))
+          .pipe(uglify())
+          .pipe(rename({suffix: '.min'}))
+          .pipe(gulp.dest('packages/theme/assets/js'))
+          .pipe(notify({message: 'JavaScript Files Compiled & Compressed Successfully'})),
+      gulp.src(['dev/src/js/fauxGhost/config.js'])
+          .pipe(concat('config.js'))
+          .pipe(gulp.dest('dev/dest/js'))
+          .pipe(uglify())
+          .pipe(rename({suffix: '.min'}))
+          .pipe(gulp.dest('packages/theme/assets/js'))
+          .pipe(notify({message: 'JavaScript Files Compiled & Compressed Successfully'}))
+    );
 });
 
-gulp.task('build', ['scss', 'concat']);
+gulp.task('build', ['scss', 'js']);
 
 // Zip Packages Files
 gulp.task('zip', ['clean_tmp', 'build'], function() {

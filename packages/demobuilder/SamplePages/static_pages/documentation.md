@@ -77,7 +77,7 @@ There are 4 variables you might want to set for your Ghostion blog. Inside your 
 
 ```
 /*** CONFIGURATION VARIABLES: EDIT THE VALUES BELOW FOR THEME CONFIGURATION ***/
-var ghostionConfig = {
+var fauxGhostConfig = {
 	site_url: 						"ghostion.ghostdemo.axiantheme.com",
 	google_fonts_family: 			"Open+Sans:400,400italic,700,700italic",
 	google_analytics_tracking_id: 	"UA-45630355-2",

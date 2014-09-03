@@ -25,7 +25,7 @@ After that, you need to check and edit the Ghostion configuration file located a
 
 ```
 /*** CONFIGURATION VARIABLES: EDIT THE VALUES BELOW FOR THEME CONFIGURATION ***/
-var ghostionConfig = {
+var fauxGhostConfig = {
 	site_url: 						"ghostion.ghostdemo.axiantheme.com",
 	google_fonts_family: 			"Open+Sans:400,400italic,700,700italic",
 	google_analytics_tracking_id: 	"UA-45630355-2",

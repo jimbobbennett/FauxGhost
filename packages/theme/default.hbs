@@ -18,7 +18,15 @@
     <link rel="stylesheet" href="{{asset "/css/fauxghost.min.css"}}" />
 
     {{! Remove the <!-- --> below to load the custom stylesheet }}
-    <!-- <link rel="stylesheet" href="/assets/css/fauxghost.custom.css" /> -->
+    <link rel="stylesheet" href="/assets/css/fauxghost.custom.css" />
+
+    <script src="{{asset "/js/config.min.js"}}"></script>
+
+    <link rel="icon" sizes="16x16 32x32 48x48 64x64" href="{{asset "/favicon.ico"}}" />
+    <link rel="apple-touch-icon" href="{{asset "/images/touch-icon-iphone.png"}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset "/images/touch-icon-ipad.png"}}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{asset "/images/touch-icon-iphone-retina.png"}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{asset "/images/touch-icon-ipad-retina.png"}}">
 
     {{! Ghost outputs important style and meta data with this tag }}
     {{ghost_head}}
@@ -33,16 +41,6 @@
     {{! The main JavaScript file for fauxghost }}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/assets/js/jquery-2.1.0.min.js"><\/script>')</script>
-
-    <script>
-        /*** CONFIGURATION VARIABLES: EDIT THE VALUES BELOW FOR THEME CONFIGURATION ***/
-        var ghostionConfig = {
-            site_url:                       "fauxghost.ghostdemo.moomoo.io",
-            google_fonts_family:            "Open+Sans:400,400italic,700,700italic",
-            google_analytics_tracking_id:   "UA-45630355-2",
-            disqus_shortname:               "fauxghost"
-        };
-    </script>
     <script src="{{asset "/js/fauxghost.min.js"}}"></script>
 </body>
 </html>

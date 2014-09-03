@@ -6,29 +6,32 @@
   Foundation.libs.joyride = {
     name : 'joyride',
 
-    version : '5.0.3',
+    version : '5.4.2',
 
     defaults : {
-      expose               : false,      // turn on or off the expose feature
-      modal                : true,      // Whether to cover page with modal during the tour
-      tip_location          : 'bottom',  // 'top' or 'bottom' in relation to parent
-      nub_position          : 'auto',    // override on a per tooltip bases
-      scroll_speed          : 1500,       // Page scrolling speed in milliseconds, 0 = no scroll animation
-      scroll_animation     : 'linear',   // supports 'swing' and 'linear', extend with jQuery UI.
-      timer                : 0,         // 0 = no timer , all other numbers = timer in milliseconds
-      start_timer_on_click    : true,      // true or false - true requires clicking the first button start the timer
-      start_offset          : 0,         // the index of the tooltip you want to start on (index of the li)
-      next_button           : true,      // true or false to control whether a next button is used
-      tip_animation         : 'fade',    // 'pop' or 'fade' in each tip
-      pause_after           : [],        // array of indexes where to pause the tour after
-      exposed              : [],        // array of expose elements
-      tip_animation_fade_speed: 300,       // when tipAnimation = 'fade' this is speed in milliseconds for the transition
-      cookie_monster        : false,     // true or false to control whether cookies are used
-      cookie_name           : 'joyride', // Name the cookie you'll use
-      cookie_domain         : false,     // Will this cookie be attached to a domain, ie. '.notableapp.com'
-      cookie_expires        : 365,       // set when you would like the cookie to expire.
-      tip_container         : 'body',    // Where will the tip be attached
-      tip_location_patterns : {
+      expose                   : false,     // turn on or off the expose feature
+      modal                    : true,      // Whether to cover page with modal during the tour
+      keyboard                 : true,      // enable left, right and esc keystrokes
+      tip_location             : 'bottom',  // 'top' or 'bottom' in relation to parent
+      nub_position             : 'auto',    // override on a per tooltip bases
+      scroll_speed             : 1500,      // Page scrolling speed in milliseconds, 0 = no scroll animation
+      scroll_animation         : 'linear',  // supports 'swing' and 'linear', extend with jQuery UI.
+      timer                    : 0,         // 0 = no timer , all other numbers = timer in milliseconds
+      start_timer_on_click     : true,      // true or false - true requires clicking the first button start the timer
+      start_offset             : 0,         // the index of the tooltip you want to start on (index of the li)
+      next_button              : true,      // true or false to control whether a next button is used
+      prev_button              : true,      // true or false to control whether a prev button is used
+      tip_animation            : 'fade',    // 'pop' or 'fade' in each tip
+      pause_after              : [],        // array of indexes where to pause the tour after
+      exposed                  : [],        // array of expose elements
+      tip_animation_fade_speed : 300,       // when tipAnimation = 'fade' this is speed in milliseconds for the transition
+      cookie_monster           : false,     // true or false to control whether cookies are used
+      cookie_name              : 'joyride', // Name the cookie you'll use
+      cookie_domain            : false,     // Will this cookie be attached to a domain, ie. '.notableapp.com'
+      cookie_expires           : 365,       // set when you would like the cookie to expire.
+      tip_container            : 'body',    // Where will the tip be attached
+      abort_on_close           : true,      // When true, the close event will not fire any callback
+      tip_location_patterns    : {
         top: ['bottom'],
         bottom: [], // bottom should not need to be repositioned
         left: ['right', 'top', 'bottom'],
@@ -40,24 +43,53 @@
       pre_ride_callback      : function (){},    // A method to call before the tour starts (passed index, tip, and cloned exposed element)
       post_expose_callback   : function (){},    // A method to call after an element has been exposed
       template : { // HTML segments for tip layout
-        link    : '<a href="#close" class="joyride-close-tip">&times;</a>',
-        timer   : '<div class="joyride-timer-indicator-wrap"><span class="joyride-timer-indicator"></span></div>',
-        tip     : '<div class="joyride-tip-guide"><span class="joyride-nub"></span></div>',
-        wrapper : '<div class="joyride-content-wrapper"></div>',
-        button  : '<a href="#" class="small button joyride-next-tip"></a>',
-        modal   : '<div class="joyride-modal-bg"></div>',
-        expose  : '<div class="joyride-expose-wrapper"></div>',
-        expose_cover: '<div class="joyride-expose-cover"></div>'
+        link          : '<a href="#close" class="joyride-close-tip">&times;</a>',
+        timer         : '<div class="joyride-timer-indicator-wrap"><span class="joyride-timer-indicator"></span></div>',
+        tip           : '<div class="joyride-tip-guide"><span class="joyride-nub"></span></div>',
+        wrapper       : '<div class="joyride-content-wrapper"></div>',
+        button        : '<a href="#" class="small button joyride-next-tip"></a>',
+        prev_button   : '<a href="#" class="small button joyride-prev-tip"></a>',
+        modal         : '<div class="joyride-modal-bg"></div>',
+        expose        : '<div class="joyride-expose-wrapper"></div>',
+        expose_cover  : '<div class="joyride-expose-cover"></div>'
       },
       expose_add_class : '' // One or more space-separated class names to be added to exposed element
     },
 
     init : function (scope, method, options) {
-      Foundation.inherit(this, 'throttle delay');
+      Foundation.inherit(this, 'throttle random_str');
 
-      this.settings = this.defaults;
+      this.settings = this.settings || $.extend({}, this.defaults, (options || method));
 
       this.bindings(method, options)
+    },
+
+    go_next : function() {
+      if (this.settings.$li.next().length < 1) {
+        this.end();
+      } else if (this.settings.timer > 0) {
+        clearTimeout(this.settings.automate);
+        this.hide();
+        this.show();
+        this.startTimer();
+      } else {
+        this.hide();
+        this.show();
+      }
+    },
+
+    go_prev : function() {
+      if (this.settings.$li.prev().length < 1) {
+        // Do nothing if there are no prev element
+      } else if (this.settings.timer > 0) {
+        clearTimeout(this.settings.automate);
+        this.hide();
+        this.show(null, true);
+        this.startTimer();
+      } else {
+        this.hide();
+        this.show(null, true);
+      }
     },
 
     events : function () {
@@ -67,30 +99,40 @@
         .off('.joyride')
         .on('click.fndtn.joyride', '.joyride-next-tip, .joyride-modal-bg', function (e) {
           e.preventDefault();
-
-          if (this.settings.$li.next().length < 1) {
-            this.end();
-          } else if (this.settings.timer > 0) {
-            clearTimeout(this.settings.automate);
-            this.hide();
-            this.show();
-            this.startTimer();
-          } else {
-            this.hide();
-            this.show();
-          }
-
+          this.go_next()
+        }.bind(this))
+        .on('click.fndtn.joyride', '.joyride-prev-tip', function (e) {
+          e.preventDefault();
+          this.go_prev();
         }.bind(this))
 
         .on('click.fndtn.joyride', '.joyride-close-tip', function (e) {
           e.preventDefault();
-          this.end();
+          this.end(this.settings.abort_on_close);
+        }.bind(this))
+
+        .on("keyup.joyride", function(e) {
+          if (!this.settings.keyboard) return;
+
+          switch (e.which) {
+            case 39: // right arrow
+              e.preventDefault();
+              this.go_next();
+              break;
+            case 37: // left arrow
+              e.preventDefault();
+              this.go_prev();
+              break;
+            case 27: // escape
+              e.preventDefault();
+              this.end(this.settings.abort_on_close);
+          }
         }.bind(this));
 
       $(window)
         .off('.joyride')
         .on('resize.fndtn.joyride', self.throttle(function () {
-          if ($('[data-joyride]').length > 0 && self.settings.$next_tip) {
+          if ($('[' + self.attr_name() + ']').length > 0 && self.settings.$next_tip && self.settings.riding) {
             if (self.settings.exposed.length > 0) {
               var $els = $(self.settings.exposed);
 
@@ -104,7 +146,7 @@
             if (self.is_phone()) {
               self.pos_phone();
             } else {
-              self.pos_default(false, true);
+              self.pos_default(false);
             }
           }
         }, 100));
@@ -112,7 +154,7 @@
 
     start : function () {
       var self = this,
-          $this = $('[data-joyride]', this.scope),
+          $this = $('[' + this.attr_name() + ']', this.scope),
           integer_settings = ['timer', 'scrollSpeed', 'startOffset', 'tipAnimationFadeSpeed', 'cookieExpires'],
           int_settings_count = integer_settings.length;
 
@@ -120,7 +162,7 @@
 
       if (!this.settings.init) this.events();
 
-      this.settings = $this.data('joyride-init');
+      this.settings = $this.data(this.attr_name(true) + '-init');
 
       // non configureable settings
       this.settings.$content_el = $this;
@@ -129,6 +171,7 @@
       this.settings.$tip_content = this.settings.$content_el.find('> li');
       this.settings.paused = false;
       this.settings.attempts = 0;
+      this.settings.riding = true;
 
       // can we create cookies?
       if (typeof $.cookie !== 'function') {
@@ -139,10 +182,11 @@
       if (!this.settings.cookie_monster || this.settings.cookie_monster && !$.cookie(this.settings.cookie_name)) {
         this.settings.$tip_content.each(function (index) {
           var $this = $(this);
-          this.settings = $.extend({}, self.defaults, self.data_options($this))
+          this.settings = $.extend({}, self.defaults, self.data_options($this));
 
           // Make sure that settings parsed from data_options are integers where necessary
-          for (var i = int_settings_count - 1; i >= 0; i--) {
+          var i = int_settings_count;
+          while (i--) {
             self.settings[integer_settings[i]] = parseInt(self.settings[integer_settings[i]], 10);
           }
           self.create({$li : $this, index : index});
@@ -171,12 +215,13 @@
 
       $blank = $(this.settings.template.tip).addClass(opts.tip_class);
       content = $.trim($(opts.li).html()) +
+        this.prev_button_text(opts.prev_button_text, opts.index) +
         this.button_text(opts.button_text) +
         this.settings.template.link +
         this.timer_instance(opts.index);
 
       $blank.append($(this.settings.template.wrapper));
-      $blank.first().attr('data-index', opts.index);
+      $blank.first().attr(this.add_namespace('data-index'), opts.index);
       $('.joyride-content-wrapper', $blank).append(content);
 
       return $blank[0];
@@ -194,7 +239,7 @@
     },
 
     button_text : function (txt) {
-      if (this.settings.next_button) {
+      if (this.settings.tip_settings.next_button) {
         txt = $.trim(txt) || 'Next';
         txt = $(this.settings.template.button).append(txt)[0].outerHTML;
       } else {
@@ -203,20 +248,40 @@
       return txt;
     },
 
+    prev_button_text : function (txt, idx) {
+      if (this.settings.tip_settings.prev_button) {
+        txt = $.trim(txt) || 'Previous';
+
+        // Add the disabled class to the button if it's the first element
+        if (idx == 0)
+          txt = $(this.settings.template.prev_button).append(txt).addClass('disabled')[0].outerHTML;
+        else
+          txt = $(this.settings.template.prev_button).append(txt)[0].outerHTML;
+      } else {
+        txt = '';
+      }
+      return txt;
+    },
+
     create : function (opts) {
-      var buttonText = opts.$li.attr('data-button') || opts.$li.attr('data-text'),
+      this.settings.tip_settings = $.extend({}, this.settings, this.data_options(opts.$li));
+      var buttonText = opts.$li.attr(this.add_namespace('data-button'))
+        || opts.$li.attr(this.add_namespace('data-text')),
+          prevButtonText = opts.$li.attr(this.add_namespace('data-button-prev'))
+        || opts.$li.attr(this.add_namespace('data-prev-text')),
         tipClass = opts.$li.attr('class'),
         $tip_content = $(this.tip_template({
           tip_class : tipClass,
           index : opts.index,
           button_text : buttonText,
+          prev_button_text : prevButtonText,
           li : opts.$li
         }));
 
       $(this.settings.tip_container).append($tip_content);
     },
 
-    show : function (init) {
+    show : function (init, is_prev) {
       var $timer = null;
 
       // are we paused?
@@ -227,7 +292,7 @@
         if (this.settings.paused) {
           this.settings.paused = false;
         } else {
-          this.set_li(init);
+          this.set_li(init, is_prev);
         }
 
         this.settings.attempts = 0;
@@ -273,7 +338,7 @@
 
               this.settings.$next_tip.show();
 
-              this.delay(function () {
+              setTimeout(function () {
                 $timer.animate({
                   width: $timer.parent().width()
                 }, this.settings.timer, 'linear');
@@ -295,11 +360,11 @@
                 .fadeIn(this.settings.tip_animation_fade_speed)
                 .show();
 
-              this.delay(function () {
+              setTimeout(function () {
                 $timer.animate({
                   width: $timer.parent().width()
                 }, this.settings.timer, 'linear');
-              }.bind(this), this.settings.tip_animation_fadeSpeed);
+              }.bind(this), this.settings.tip_animation_fade_speed);
 
             } else {
               this.settings.$next_tip.fadeIn(this.settings.tip_animation_fade_speed);
@@ -350,13 +415,16 @@
         this.settings.$current_tip);
     },
 
-    set_li : function (init) {
+    set_li : function (init, is_prev) {
       if (init) {
         this.settings.$li = this.settings.$tip_content.eq(this.settings.start_offset);
         this.set_next_tip();
         this.settings.$current_tip = this.settings.$next_tip;
       } else {
-        this.settings.$li = this.settings.$li.next();
+        if (is_prev)
+          this.settings.$li = this.settings.$li.prev();
+        else
+          this.settings.$li = this.settings.$li.next();
         this.set_next_tip();
       }
 
@@ -369,8 +437,8 @@
     },
 
     set_target : function () {
-      var cl = this.settings.$li.attr('data-class'),
-          id = this.settings.$li.attr('data-id'),
+      var cl = this.settings.$li.attr(this.add_namespace('data-class')),
+          id = this.settings.$li.attr(this.add_namespace('data-id')),
           $sel = function () {
             if (id) {
               return $(document.getElementById(id));
@@ -391,7 +459,7 @@
       tipOffset = Math.ceil(this.settings.$target.offset().top - window_half + this.settings.$next_tip.outerHeight());
 
       if (tipOffset != 0) {
-        $('html, body').animate({
+        $('html, body').stop().animate({
           scrollTop: tipOffset
         }, this.settings.scroll_speed, 'swing');
       }
@@ -407,10 +475,8 @@
       this.show('init');
     },
 
-    pos_default : function (init, resizing) {
-      var half_fold = Math.ceil($(window).height() / 2),
-          tip_position = this.settings.$next_tip.offset(),
-          $nub = this.settings.$next_tip.find('.joyride-nub'),
+    pos_default : function (init) {
+      var $nub = this.settings.$next_tip.find('.joyride-nub'),
           nub_width = Math.ceil($nub.outerWidth() / 2),
           nub_height = Math.ceil($nub.outerHeight() / 2),
           toggle = init || false;
@@ -421,20 +487,19 @@
         this.settings.$next_tip.show();
       }
 
-      if (typeof resizing === 'undefined') {
-        resizing = false;
-      }
-
       if (!/body/i.test(this.settings.$target.selector)) {
+      	  var topAdjustment = this.settings.tip_settings.tipAdjustmentY ? parseInt(this.settings.tip_settings.tipAdjustmentY) : 0,
+			        leftAdjustment = this.settings.tip_settings.tipAdjustmentX ? parseInt(this.settings.tip_settings.tipAdjustmentX) : 0;
+
           if (this.bottom()) {
             if (this.rtl) {
               this.settings.$next_tip.css({
-                top: (this.settings.$target.offset().top + nub_height + this.settings.$target.outerHeight()),
-                left: this.settings.$target.offset().left + this.settings.$target.outerWidth() - this.settings.$next_tip.outerWidth()});
+                top: (this.settings.$target.offset().top + nub_height + this.settings.$target.outerHeight() + topAdjustment),
+                left: this.settings.$target.offset().left + this.settings.$target.outerWidth() - this.settings.$next_tip.outerWidth() + leftAdjustment});
             } else {
               this.settings.$next_tip.css({
-                top: (this.settings.$target.offset().top + nub_height + this.settings.$target.outerHeight()),
-                left: this.settings.$target.offset().left});
+                top: (this.settings.$target.offset().top + nub_height + this.settings.$target.outerHeight() + topAdjustment),
+                left: this.settings.$target.offset().left + leftAdjustment});
             }
 
             this.nub_position($nub, this.settings.tip_settings.nub_position, 'top');
@@ -442,12 +507,12 @@
           } else if (this.top()) {
             if (this.rtl) {
               this.settings.$next_tip.css({
-                top: (this.settings.$target.offset().top - this.settings.$next_tip.outerHeight() - nub_height),
+                top: (this.settings.$target.offset().top - this.settings.$next_tip.outerHeight() - nub_height + topAdjustment),
                 left: this.settings.$target.offset().left + this.settings.$target.outerWidth() - this.settings.$next_tip.outerWidth()});
             } else {
               this.settings.$next_tip.css({
-                top: (this.settings.$target.offset().top - this.settings.$next_tip.outerHeight() - nub_height),
-                left: this.settings.$target.offset().left});
+                top: (this.settings.$target.offset().top - this.settings.$next_tip.outerHeight() - nub_height + topAdjustment),
+                left: this.settings.$target.offset().left + leftAdjustment});
             }
 
             this.nub_position($nub, this.settings.tip_settings.nub_position, 'bottom');
@@ -455,16 +520,16 @@
           } else if (this.right()) {
 
             this.settings.$next_tip.css({
-              top: this.settings.$target.offset().top,
-              left: (this.outerWidth(this.settings.$target) + this.settings.$target.offset().left + nub_width)});
+              top: this.settings.$target.offset().top + topAdjustment,
+              left: (this.settings.$target.outerWidth() + this.settings.$target.offset().left + nub_width + leftAdjustment)});
 
             this.nub_position($nub, this.settings.tip_settings.nub_position, 'left');
 
           } else if (this.left()) {
 
             this.settings.$next_tip.css({
-              top: this.settings.$target.offset().top,
-              left: (this.settings.$target.offset().left - this.outerWidth(this.settings.$next_tip) - nub_width)});
+              top: this.settings.$target.offset().top + topAdjustment,
+              left: (this.settings.$target.offset().left - this.settings.$next_tip.outerWidth() - nub_width + leftAdjustment)});
 
             this.nub_position($nub, this.settings.tip_settings.nub_position, 'right');
 
@@ -568,7 +633,7 @@
           el,
           origCSS,
           origClasses,
-          randId = 'expose-'+Math.floor(Math.random()*10000);
+          randId = 'expose-' + this.random_str(6);
 
       if (arguments.length > 0 && arguments[0] instanceof $) {
         el = arguments[0];
@@ -701,7 +766,7 @@
     },
 
     remove_exposed: function(el){
-      var search, count;
+      var search, i;
       if (el instanceof $) {
         search = el[0]
       } else if (typeof el == 'string'){
@@ -709,9 +774,9 @@
       }
 
       this.settings.exposed = this.settings.exposed || [];
-      count = this.settings.exposed.length;
+      i = this.settings.exposed.length;
 
-      for (var i=0; i < count; i++) {
+      while (i--) {
         if (this.settings.exposed[i] == search) {
           this.settings.exposed.splice(i, 1);
           return;
@@ -806,7 +871,7 @@
       }
     },
 
-    end : function () {
+    end : function (abort) {
       if (this.settings.cookie_monster) {
         $.cookie(this.settings.cookie_name, 'ridden', { expires: this.settings.cookie_expires, domain: this.settings.cookie_domain });
       }
@@ -819,12 +884,20 @@
         this.un_expose();
       }
 
+      // Unplug keystrokes listener
+      $(this.scope).off('keyup.joyride')
+
       this.settings.$next_tip.data('closed', true);
+      this.settings.riding = false;
 
       $('.joyride-modal-bg').hide();
       this.settings.$current_tip.hide();
-      this.settings.post_step_callback(this.settings.$li.index(), this.settings.$current_tip);
-      this.settings.post_ride_callback(this.settings.$li.index(), this.settings.$current_tip);
+
+      if (typeof abort === 'undefined' || abort === false) {
+        this.settings.post_step_callback(this.settings.$li.index(), this.settings.$current_tip);
+        this.settings.post_ride_callback(this.settings.$li.index(), this.settings.$current_tip);
+      }
+
       $('.joyride-tip-guide').remove();
     },
 
@@ -839,4 +912,4 @@
 
     reflow : function () {}
   };
-}(jQuery, this, this.document));
+}(jQuery, window, window.document));
