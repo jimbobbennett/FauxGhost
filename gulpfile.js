@@ -27,9 +27,7 @@ gulp.task('copy_assets', ['scss'], function(){
     return eventstream.concat (
       // FauxGhost
       gulp.src('dest/css/fauxghost.min.css')
-        .pipe(gulp.dest('packages/FauxGhost/assets/css'))
-        .pipe(minifycss())
-        .pipe(rename({suffix: '.min'})),
+        .pipe(gulp.dest('packages/FauxGhost/assets/css')),
 
       gulp.src(['bower_components/fastclick/lib/fastclick.js',
                 'src/js/thirdparty/*.js',
@@ -56,14 +54,23 @@ gulp.task('copy_assets', ['scss'], function(){
 
       // JQuery
       gulp.src('bower_components/jquery/dist/jquery.js')
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('packages/FauxGhost/assets/js')),
 
       // foundation
       gulp.src('bower_components/foundation/css/foundation.css')
+        .pipe(minifycss())
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('packages/FauxGhost/assets/css')),
       gulp.src('bower_components/foundation/js/foundation.js')
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+
       gulp.src('bower_components/foundation/js/vendor/modernizr.js')
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('packages/FauxGhost/assets/js')),
 
       // theme files
