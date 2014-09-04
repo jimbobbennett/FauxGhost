@@ -21,11 +21,11 @@
 
     <script src="{{asset "/js/config.min.js"}}"></script>
 
-    <link rel="icon" sizes="16x16 32x32 48x48 64x64" href="{{asset "/favicon.ico"}}" />
-    <link rel="apple-touch-icon" href="{{asset "/images/touch-icon-iphone.png"}}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{asset "/images/touch-icon-ipad.png"}}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{asset "/images/touch-icon-iphone-retina.png"}}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{asset "/images/touch-icon-ipad-retina.png"}}">
+    <link rel="icon" sizes="16x16 32x32 48x48 64x64" href="{{asset "/favicons/favicon.ico"}}" />
+    <link rel="apple-touch-icon" href="{{asset "/favicons/touch-icon-iphone.png"}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset "/favicons/touch-icon-ipad.png"}}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{asset "/favicons/touch-icon-iphone-retina.png"}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{asset "/favicons/touch-icon-ipad-retina.png"}}">
 
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
@@ -39,8 +39,8 @@
     <div id="at_page_surround">
       <div id="at_body">
         <div class='off-canvas-wrap' data-offcanvas>
-          <div class='inner-wrap'>
-            <a class='at_off_canvas_toggle left-off-canvas-toggle' href='#'><span class='fa fa-bars'></span></a>
+          <div class='inner-wrap' id="menu_inner_wrap">
+            <a class='at_off_canvas_toggle left-off-canvas-toggle' href='#' id="show_menu_link"><span class='fa fa-bars'></span></a>
 
             {{{ body }}}
 
@@ -56,6 +56,11 @@
     <script src="{{asset "/js/fauxghost.min.js"}}"></script>
     <script>
       $(document).foundation();
+
+      if (!fauxGhostConfig.sidebar)
+      {
+        document.getElementById('menu_inner_wrap').removeChild(document.getElementById('show_menu_link'));
+      }
     </script>
 
 </body>
