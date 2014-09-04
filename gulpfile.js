@@ -30,7 +30,9 @@ gulp.task('copy_assets', ['scss'], function(){
         .pipe(gulp.dest('packages/FauxGhost/assets/css'))
         .pipe(minifycss())
         .pipe(rename({suffix: '.min'})),
-      gulp.src(['src/js/thirdparty/*.js',
+
+      gulp.src(['bower_components/fastclick/lib/fastclick.js',
+                'src/js/thirdparty/*.js',
                 'src/js/fauxghost.js'])
       .pipe(concat('fauxghost.js'))
       .pipe(gulp.dest('dest/js'))

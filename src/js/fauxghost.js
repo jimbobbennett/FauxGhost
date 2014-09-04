@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-          //FastClick.attach(document.body);
+    FastClick.attach(document.body);
     $(document).ready(function(){
         $(".at_block").fitVids();
     $(".at_search_input").ghostHunter({results: ".at_search_results", onKeyUp: true, info_template: "<span class='at_search_clear_toggle'>&#215;</span> <span class='at_search_results_amount'>Number of posts found: {{amount}}</span><span class='clearfix'></span>", result_template : "<span><a href='{{link}}'><span class='at_search_results_title'>{{title}}</span></a></span>"});

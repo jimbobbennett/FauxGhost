@@ -1,4 +1,4 @@
-if (auxGhostConfig.google_fonts_family)
+if (fauxGhostConfig.google_fonts_family)
   {
 WebFontConfig = {
   google: { families: [ fauxGhostConfig.google_fonts_family ] }
