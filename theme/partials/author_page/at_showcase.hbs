@@ -1,0 +1,37 @@
+<div id="at_showcase">
+  <div class="at_blog_cover" {{#if @blog.cover}}style="background-image: url({{@blog.cover}})"{{/if}}>
+      <div class="at_showcase_overlay {{#if @blog.cover}}at_with_blog_cover{{/if}}">
+      <div class="row">
+        <div class="large-12 large-centered columns">
+          <div class="at_block">
+            <div class="text-center">
+              {{#author}}
+                {{#if image}}
+                  <div class="at_author_image image_container_100">
+                      <img src="{{image}}" alt="{{name}}">
+                  </div>
+                {{/if}}
+
+                <h1 class="at_post_title">{{name}}</h1>
+                <p/>
+                <h3 class="at_post_title">{{bio}}</h3>
+                <p/>
+                <div class="author-meta">
+                    {{#if location}}
+                      <span class="author-location icon-location at_post_author"><span class="fa fa-globe"></span> <span>{{location}}</span></span>
+                    {{/if}}
+                    {{#if website}}
+                      <span class="author-link icon-link at_post_author"><span class="fa fa-external-link-square"></span> <span><a href="{{website}}">{{website}}</a></span></span>
+                    {{/if}}
+                  <div>
+                    <span class="author-stats"><i class="icon-stats"></i> {{plural ../pagination.total empty='No posts' singular='% post' plural='% posts'}}</span>
+                  </div>
+                </div>
+              {{/author}}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>

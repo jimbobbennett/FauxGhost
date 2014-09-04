@@ -15,12 +15,16 @@ function usage
 while [ "$1" != "" ]; do
     case $1 in
     	-i | --install	)	echo "$(tput setaf 3)Installing Necessary Gulp Plugins for FauxGhost$(tput sgr 0)"
-							npm install --save
+              npm install --save
+              bower install --save
 							echo "$(tput setaf 2)Necessary Gulp Plugins for FauxGhost are Installed Successfully$(tput sgr 0)"
 							exit
 							;;
 		-r | --release	)	echo "$(tput setaf 3)Releasing FauxGhost Theme Files$(tput sgr 0)"
 							gulp release
+              rm -r ~/ghost-0/content/themes/FauxGhost
+              mkdir ~/ghost-0/content/themes/FauxGhost
+              cp -R packages/FauxGhost ~/ghost-0/content/themes
 							echo "$(tput setaf 2)FauxGhost Theme Files Released Successfully$(tput sgr 0)"
 							exit
 							;;

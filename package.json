@@ -1,17 +1,8 @@
 {
-  "name": "FauxGhost",
-  "version": "1.0.0",
-  "description": "Free Ghost Theme Powered by Foundation 5 and Bourbon",
-  "license": "MIT",
-  "author": {
-    "name": "FauxGhost",
-    "email": "jim@moomoo.io",
-    "url": "http://www.moomoo.io"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:jimbobbennett/FauxGhost.git"
-  },
+  "name": "FauxGhostBootstrap",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
   "dependencies": {
     "event-stream": "*",
     "gulp": "^3.8.7",

@@ -14,44 +14,94 @@ var gulp        = require('gulp'),
 // Compile scss Files
 gulp.task('scss', function() {
     return eventstream.concat (
-      gulp.src('dev/src/scss/fauxghost.scss')
-        .pipe(sass({style: 'expanded', quiet: false, cacheLocation: 'dev/src/scss/.sass-cache'}))
-        .pipe(gulp.dest('dev/dest/css'))
+      gulp.src('src/scss/fauxghost.scss')
+        .pipe(sass({style: 'expanded', quiet: false, cacheLocation: 'src/scss/.sass-cache'}))
+        .pipe(gulp.dest('dest/css'))
         .pipe(minifycss())
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('packages/theme/assets/css'))
-        .pipe(notify({message: 'SCSS Files Compiled Successfully'})),
-      gulp.src('dev/src/framework/foundation/css/foundation.min.css')
-        .pipe(gulp.dest('dev/dest/css'))
-        .pipe(gulp.dest('packages/theme/assets/css'))
+        .pipe(gulp.dest('packages/FauxGhost/assets/css'))
         );
 });
+
+gulp.task('copy_assets', ['scss'], function(){
+    return eventstream.concat (
+      // FauxGhost
+      gulp.src('dest/css/fauxghost.min.css')
+        .pipe(gulp.dest('packages/FauxGhost/assets/css'))
+        .pipe(minifycss())
+        .pipe(rename({suffix: '.min'})),
+      gulp.src('src/js/fauxghost.js')
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+      gulp.src('config.js')
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+
+      // font awesome
+      gulp.src('bower_components/fontawesome/css/font-awesome.min.css')
+        .pipe(gulp.dest('packages/FauxGhost/assets/css')),
+      gulp.src('bower_components/fontawesome/fonts/**')
+        .pipe(gulp.dest('packages/FauxGhost/assets/fonts')),
+
+      // JQuery
+      gulp.src('bower_components/jquery/dist/jquery.js')
+        .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+
+      // foundation
+      gulp.src('bower_components/foundation/css/foundation.css')
+        .pipe(gulp.dest('packages/FauxGhost/assets/css')),
+      gulp.src('bower_components/foundation/js/foundation.js')
+        .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+      gulp.src('bower_components/foundation/js/vendor/modernizr.js')
+        .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+
+      // theme files
+      gulp.src('theme/**')
+        .pipe(gulp.dest('packages/FauxGhost'))
+    );
+});
+
+gulp.task('release', ['copy_assets']);
+
+
+
+
+
+
+
+// Compile scss Files
+// gulp.task('scss', function() {
+//     return eventstream.concat (
+//       gulp.src('dev/src/scss/fauxghost.scss')
+//         .pipe(sass({style: 'expanded', quiet: false, cacheLocation: 'dev/src/scss/.sass-cache'}))
+//         .pipe(gulp.dest('dev/dest/css'))
+//         .pipe(minifycss())
+//         .pipe(rename({suffix: '.min'}))
+//         .pipe(gulp.dest('packages/FauxGhost/assets/css'))
+//         );
+// });
 
 // Concat JS Files
 gulp.task('js', function() {
     return eventstream.concat (
       gulp.src([
+              'dev/src/framework/fastclick/lib/fastclick.js',
               'dev/src/framework/foundation/js/vendor/modernizr.js',
-              'dev/src/framework/foundation/js/foundation/foundation.js',
-              'dev/src/framework/foundation/js/foundation/foundation.alert.js',
-              'dev/src/framework/foundation/js/foundation/foundation.offcanvas.js',
-              'dev/src/framework/foundation/js/foundation/foundation.reveal.js',
-              'dev/src/framework/foundation/js/foundation/foundation.tooltip.js',
-              'dev/src/js/fauxGhost/fauxGhost.js',
-              'dev/src/js/thirdParty/*.js'])
+              'dev/src/framework/foundation/js/foundation.js',
+              'dev/src/js/thirdParty/*.js',
+              'dev/src/js/fauxGhost/fauxghost.js'])
           .pipe(concat('fauxghost.js'))
           .pipe(gulp.dest('dev/dest/js'))
           .pipe(uglify())
           .pipe(rename({suffix: '.min'}))
-          .pipe(gulp.dest('packages/theme/assets/js'))
-          .pipe(notify({message: 'JavaScript Files Compiled & Compressed Successfully'})),
-      gulp.src(['dev/src/js/fauxGhost/config.js'])
-          .pipe(concat('config.js'))
+          .pipe(gulp.dest('packages/FauxGhost/assets/js')),
+      gulp.src('config.js')
           .pipe(gulp.dest('dev/dest/js'))
           .pipe(uglify())
           .pipe(rename({suffix: '.min'}))
-          .pipe(gulp.dest('packages/theme/assets/js'))
-          .pipe(notify({message: 'JavaScript Files Compiled & Compressed Successfully'}))
+          .pipe(gulp.dest('packages/FauxGhost/assets/js'))
     );
 });
 
@@ -59,24 +109,10 @@ gulp.task('build', ['scss', 'js']);
 
 // Zip Packages Files
 gulp.task('zip', ['clean_tmp', 'build'], function() {
-    return eventstream.concat (
-        // Zip Theme Files
-        gulp.src('**', {cwd: path.join(process.cwd(), 'packages/theme')})
-            .pipe(zip('FauxGhost.zip'))
-            .pipe(gulp.dest('dev/tmp/theme')),
-        // Zip Documentation Filez
-        gulp.src('**', {cwd: path.join(process.cwd(), 'packages/documentation')})
-            .pipe(zip('FauxGhost_documentation.zip'))
-            .pipe(gulp.dest('dev/tmp/documentation')),
-        // Zip Sources Files
-        gulp.src('**', {cwd: path.join(process.cwd(), 'packages/sources')})
-            .pipe(zip('FauxGhost_sources.zip'))
-            .pipe(gulp.dest('dev/tmp/sources')),
-        // Zip DemoBuilder Files
-        gulp.src('**', {cwd: path.join(process.cwd(), 'packages/demobuilder')})
-            .pipe(zip('FauxGhost_demobuilder.zip'))
-            .pipe(gulp.dest('dev/tmp/demobuilder'))
-    );
+  // Zip Theme Files
+  return gulp.src('**', {cwd: path.join(process.cwd(), 'packages/theme')})
+      .pipe(zip('FauxGhost.zip'))
+      .pipe(gulp.dest('dev/tmp/theme'));
 });
 
 // Clean tmp Files
@@ -98,10 +134,12 @@ gulp.task('clean_releases', function() {
 
 // Move Zip Files to releases Folder
 gulp.task('move_zip', ['zip', 'clean_releases'], function() {
-    return gulp.src('dev/tmp/**/*.zip')
-        .pipe(gulp.dest('releases'))
-        .pipe(notify({message: 'All Files Released Successfully'}));
+    return eventstream.concat (
+       gulp.src('dev/tmp/**/*.zip')
+        .pipe(gulp.dest('releases')),
+      gulp.src('**', {cwd: path.join(process.cwd(), 'packages/theme')})
+          .pipe(gulp.dest('releases/theme/FauxGhost')),
+      gulp.src('**', {cwd: path.join(process.cwd(), 'packages/theme')})
+          .pipe(gulp.dest('../../ghost-0/content/themes/FauxGhost'))
+      );
 });
-
-// Main Task: Release
-gulp.task('release', ['final_clean']);

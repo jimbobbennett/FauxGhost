@@ -1,0 +1,69 @@
+<div id="at_footer">
+	<div class="row">
+		<div class="large-12 columns text-center">
+			<div class="at_block">
+				<div class="copyright">
+					<span>&copy; {{date format="YYYY"}} <a href="{{@blog.url}}/">{{@blog.title}}</a>
+				</div>
+				<div class="poweredby" id="powered_by_ghost">
+					<span>Proudly published with <a class="icon-ghost" href="http://ghost.org">Ghost</a>
+				</div>
+					<div class="poweredby" id="email_me">
+					<span>Want to get in touch? <a class="icon-ghost" id="email_link" href=""/></span>
+				</div>
+
+				<div class="at_icon_menu hide-for-small-only" id="bottom_social_menu_large">
+					<a class="at_icon_menu_item" href="{{@blog.url}}/rss" id="bottom_rss_large"><span class="fa fa-rss"> <span>RSS</span></span></a>
+				</div>
+
+				<div class="at_icon_menu show-for-small-only" id="bottom_social_menu_small">
+					<a class="at_icon_menu_item" href="{{@blog.url}}/rss" id="bottom_rss_small"><span class="fa fa-rss"></span></a>
+				</div>
+
+				<script>
+					if (fauxGhostConfig.show_published_by_ghost)
+						document.getElementById('powered_by_ghost').style.display = 'block';
+					else
+						document.getElementById('powered_by_ghost').style.display = 'none';
+
+					if (fauxGhostConfig.email)
+				  {
+						document.getElementById('email_me').style.display = 'block';
+						document.getElementById('email_link').href = "mailto:" + fauxGhostConfig.email.address;
+						document.getElementById('email_link').appendChild( document.createTextNode(fauxGhostConfig.email.name) );
+					}
+					else
+						document.getElementById('email_me').style.display = 'none';
+
+					var largeDiv = document.getElementById('bottom_social_menu_large');
+					var smallDiv = document.getElementById('bottom_social_menu_small');
+
+					if (fauxGhostConfig.socialLinks)
+					{
+						fauxGhostConfig.socialLinks.forEach(function(link)
+						{
+							var extraHtmlLarge = '<a class="at_icon_menu_item" href="' + link.href +
+								'" ><span class="fa ' + link.icon + '"></span> <span>' + link.name + '</span></a>';
+
+							var extraHtmlSmall = '<a class="at_icon_menu_item" href="' + link.href +
+								'" ><span class="fa ' + link.icon + '"></span></a>';
+
+							largeDiv.innerHTML = extraHtmlLarge + largeDiv.innerHTML;
+							smallDiv.innerHTML = extraHtmlSmall + smallDiv.innerHTML;
+						});
+					}
+
+					if (!fauxGhostConfig.rss)
+					{
+						var rssLargeDiv = document.getElementById('bottom_rss_large');
+						var rssSmallDiv = document.getElementById('bottom_rss_small');
+
+						largeDiv.removeChild(rssLargeDiv);
+						smallDiv.removeChild(rssSmallDiv);
+					}
+				</script>
+
+			</div>
+		</div>
+	</div>
+</div>
