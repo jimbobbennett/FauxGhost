@@ -1,9 +1,9 @@
 var fauxGhostConfig = {
-    "site_url": "http://localhost:2368",
+    "site_url": "http://jimbobbennett.io",
     "google_fonts_family": "Open+Sans:400,400italic,700,700italic",
-    "google_analytics_tracking_id": "UA-45630355-2",
+    "google_analytics_tracking_id": "UA-51294952-1",
     "disqus_shortname": "jimbobbennett",
-    "show_author_details": "true",
+    //"show_author_details": "true",
     "show_published_by_ghost": "true",
     "email":
     {
@@ -42,23 +42,33 @@ var fauxGhostConfig = {
     ],
     "sidebar":
     {
-      "title": "Menu",
+      "title": "Main Menu",
       "items":
       [
         {
           "title": "Home",
-          "url": "http://localhost:2368",
+          "url": "http://www.jimbobbennett.io",
           "faicon": "fa-home"
         },
         {
           "title": "About",
-          "url": "http://localhost:2368",
-          "faicon": "fa-home"
+          "url": "http://ghost.org/jimbobbennett/",
+          "image": "../favicons/favicon.ico"
         },
         {
           "title": "MooMoo.io",
-          "url": "https://moomoo.io",
+          "url": "https://www.moomoo.io",
           "image": "Ducky.svg"
+        },
+        {
+          "title": "Technology",
+          "tag": "technology",
+          "faicon": "fa-desktop"
+        },
+        {
+          "title": "Business",
+          "tag": "business",
+          "faicon": "fa-briefcase"
         },
         {
           "title": "Food",
