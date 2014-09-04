@@ -1,3 +1,5 @@
+if (auxGhostConfig.google_fonts_family)
+  {
 WebFontConfig = {
   google: { families: [ fauxGhostConfig.google_fonts_family ] }
 };
@@ -10,3 +12,4 @@ WebFontConfig = {
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(wf, s);
 })();
+}
