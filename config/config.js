@@ -1,5 +1,5 @@
 var fauxGhostConfig = {
-    "site_url": "http://jimbobbennett.io",
+    "site_url": "http://www.jimbobbennett.io",
     "google_fonts_family": "Open+Sans:400,400italic,700,700italic",
     "google_analytics_tracking_id": "UA-51294952-1",
     "disqus_shortname": "jimbobbennett",
