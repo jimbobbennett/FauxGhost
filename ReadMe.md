@@ -44,12 +44,12 @@ This file contains the SASS variables for changing your blog colour scheme.
 Put the favicons you want for your blog in this folder.
 
 Image | Size | Description
---------------------------
+------|------|--------------
 Favicon.ico|16x16, 32x32, 64x64|The main favicon for your blog in .ico format
 touch-icon-ipad.png|76x76|Icon when saving a link to an iPad springboard
-touch-icon-ipad-retina|152x152|Icon when saving a link to a retina iPad springboard
+touch-icon-ipad-retina.png|152x152|Icon when saving a link to a retina iPad springboard
 touch-icon-iphone.png|60x60|Icon when saving a link to an iPhone springboard
-touch-icon-iphone-retina|120x120|Icon when saving a link to a retina iPhone springboard
+touch-icon-iphone-retina.png|120x120|Icon when saving a link to a retina iPhone springboard
 
 ```
 .\config\images
