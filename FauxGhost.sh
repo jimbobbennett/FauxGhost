@@ -22,9 +22,6 @@ while [ "$1" != "" ]; do
 							;;
 		-r | --release	)	echo "$(tput setaf 3)Releasing FauxGhost Theme Files$(tput sgr 0)"
 							gulp release
-              rm -r ~/ghost-0/content/themes/FauxGhost
-              mkdir ~/ghost-0/content/themes/FauxGhost
-              cp -R packages/FauxGhost ~/ghost-0/content/themes
 							echo "$(tput setaf 2)FauxGhost Theme Files Released Successfully$(tput sgr 0)"
 							exit
 							;;

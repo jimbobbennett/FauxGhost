@@ -1,13 +1,13 @@
 var fauxGhostConfig = {
-    "site_url": "http://www.jimbobbennett.io",
+    "site_url": "",
     "google_fonts_family": "Open+Sans:400,400italic,700,700italic",
-    "google_analytics_tracking_id": "UA-51294952-1",
-    "disqus_shortname": "jimbobbennett",
-    //"show_author_details": "true",
+    "google_analytics_tracking_id": "",
+    "disqus_shortname": "",
+    "show_author_details": "true",
     "show_published_by_ghost": "true",
     "email":
     {
-      "address": "jim@jimbobbennett.io",
+      "address": "email@address",
       "name": "Send Email"
     },
     "rss": "true",
@@ -20,24 +20,14 @@ var fauxGhostConfig = {
     "socialLinks":
     [
       {
-        "href": "http://twitter.com/jimbobbennett",
+        "href": "http://twitter.com/",
         "name": "Twitter",
         "icon": "fa-twitter-square"
       },
       {
-        "href": "http://github.com/jimbobbennett",
+        "href": "http://github.com/",
         "name": "GitHub",
         "icon": "fa-github-square"
-      },
-      {
-        "href": "http://www.linkedin.com/pub/jim-bennett/20/448/367",
-        "name": "LinkedIn",
-        "icon": "fa-linkedin-square"
-      },
-      {
-        "href": "http://plus.google.com/+JimBennettio",
-        "name": "Google+",
-        "icon": "fa-google-plus-square"
       }
     ],
     "sidebar":
@@ -46,34 +36,11 @@ var fauxGhostConfig = {
       "items":
       [
         {
-          "title": "Home",
-          "url": "http://www.jimbobbennett.io",
-          "faicon": "fa-home"
-        },
-        {
           "title": "About",
-          "url": "http://ghost.org/jimbobbennett/",
-          "image": "../favicons/favicon.ico"
-        },
-        {
-          "title": "MooMoo.io",
-          "url": "https://www.moomoo.io",
-          "image": "Ducky.svg"
-        },
-        {
-          "title": "Technology",
-          "tag": "technology",
-          "faicon": "fa-desktop"
-        },
-        {
-          "title": "Business",
-          "tag": "business",
-          "faicon": "fa-briefcase"
-        },
-        {
-          "title": "Food",
-          "tag": "food",
-          "faicon": "fa-cutlery"
+          "url": "http://ghost.org/",
+          "image": "FauxGhost.png"
+          //"tag": "technology",
+          //"faicon": "fa-desktop"
         }
       ]
     }
