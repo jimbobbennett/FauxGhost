@@ -12,7 +12,7 @@ var gulp        = require('gulp'),
     zip         = require('gulp-zip');
 
 // Compile scss Files
-gulp.task('scss', ['clean_dest', 'clean_release'], function() {
+gulp.task('scss', ['clean_dest', 'clean_release', 'clean_zip'], function() {
     return eventstream.concat (
       gulp.src('src/scss/fauxghost.scss')
         .pipe(sass({style: 'expanded', quiet: false, cacheLocation: 'src/scss/.sass-cache'}))
@@ -75,15 +75,26 @@ gulp.task('copy_assets', ['scss'], function(){
 
       // theme files
       gulp.src('theme/**')
-        .pipe(gulp.dest('packages/FauxGhost'))
+        .pipe(gulp.dest('packages/FauxGhost/'))
     );
 });
 
-gulp.task('release', ['copy_assets'], function(){
+gulp.task('zip', ['copy_assets'], function(){
+    gulp.src('**', {cwd: path.join(process.cwd(), 'packages/FauxGhost')})
+      .pipe(zip('FauxGhost.zip'))
+      .pipe(gulp.dest('.'));
+});
+
+gulp.task('release', ['zip'], function(){
 });
 
 gulp.task('clean_dest', function(){
   return gulp.src('dest')
+  .pipe(rimraf());
+});
+
+gulp.task('clean_zip', function(){
+  return gulp.src('FauxGhost.zip')
   .pipe(rimraf());
 });
 
