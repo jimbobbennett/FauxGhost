@@ -6,7 +6,13 @@ Faux Ghost is a free Ghost theme powered by [Foundation 5](http://foundation.zur
 [Ghostion](https://github.com/axiantheme/ghostion).  This theme is designed to
 be responsive, fast and simple.
 
-[Check it out on my blog](http://www.jimbobbennett.io)
+[Check it out on my blog](http://www.jimbobbennett.io) or see the screenshots below.
+
+Main Page:
+![Theme Main Page Example](ReadMeExample1.png)
+
+Off-Canvas menu:
+![Theme Off Canvas Menu Example](ReadMeExample2.png)
 
 ### Getting started
 
@@ -37,7 +43,10 @@ More details coming soon.
 ```
 .\config\_variables.scss
 ```
-This file contains the SASS variables for changing your blog colour scheme.
+This file contains the Foundation SASS variables for changing your blog colour scheme.
+Details are [available here](http://foundation.zurb.com/docs/v/3.2.5/sass-settings.php)
+but essentially any Foundation SASS variable can be tweaked here.
+
 ```
 .\config\favicons\
 ```
