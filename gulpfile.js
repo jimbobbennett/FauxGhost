@@ -45,6 +45,8 @@ gulp.task('copy_assets', ['scss'], function(){
         .pipe(gulp.dest('packages/FauxGhost/assets/favicons')),
       gulp.src('config/images/**')
         .pipe(gulp.dest('packages/FauxGhost/assets/images')),
+      gulp.src('FauxGhost_16x16.png')
+        .pipe(gulp.dest('packages/FauxGhost/assets/images')),
 
       // font awesome
       gulp.src('bower_components/fontawesome/css/font-awesome.min.css')
