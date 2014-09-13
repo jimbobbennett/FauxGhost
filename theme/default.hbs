@@ -26,11 +26,6 @@
     <link rel="apple-touch-icon" sizes="120x120" href="{{asset "/favicons/touch-icon-iphone-retina.png"}}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{asset "/favicons/touch-icon-ipad-retina.png"}}">
 
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
-
-    <script>hljs.initHighlightingOnLoad();</script>
-
     {{! Ghost outputs important style and meta data with this tag }}
     {{ghost_head}}
 
@@ -46,6 +41,20 @@
         ga('send', 'pageview');
       }
     </script>
+
+    <script type="text/javascript">
+      link = document.createElement( "link" );
+      link.href = 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/' + fauxGhostConfig.highlight_style + '.min.css';
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      link.media = "screen,print";
+
+      document.getElementsByTagName( "head" )[0].appendChild( link );
+    </script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 <body class="{{body_class}}">
     <div id="at_page_surround">

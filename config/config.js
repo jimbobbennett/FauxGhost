@@ -3,6 +3,7 @@ var fauxGhostConfig = {
     "google_fonts_family": "Open+Sans:400,400italic,700,700italic",
     "google_analytics_tracking_id": "",
     "disqus_shortname": "",
+    "highlight_style": "default",
     "show_author_details": "true",
     "show_published_by_ghost": "true",
     "email":
