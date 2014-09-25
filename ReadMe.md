@@ -6,6 +6,9 @@ Faux Ghost is a free Ghost theme powered by [Foundation 5](http://foundation.zur
 [Ghostion](https://github.com/axiantheme/ghostion).  This theme is designed to
 be responsive, fast and simple.
 
+[Visit the FauxGhost homepage at MooMoo.io](https://www.moomoo.io/fauxghost) for more information.
+If your blog uses FauxGhost, tweet me at @moomooio so I can include your blog in our list of users.
+
 [Check it out on my blog](http://www.jimbobbennett.io) or see the screenshots below.
 
 Main Page:
@@ -39,7 +42,8 @@ to set up your blog.  These fields are set in the following files:
 ```
 This file contains the main configuration for your blog.
 
-More details coming soon.
+More details coming soon.  An on-line config builder is in the works...
+
 ```
 .\config\_variables.scss
 ```
