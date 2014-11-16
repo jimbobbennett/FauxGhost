@@ -87,7 +87,7 @@ gulp.task('zip', ['copy_assets'], function(){
       .pipe(gulp.dest('.'));
 });
 
-gulp.task('release', ['zip'], function(){
+gulp.task('default', ['zip'], function(){
 });
 
 gulp.task('clean_dest', function(){

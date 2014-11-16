@@ -72,9 +72,9 @@ on the off-canvas menu you can reference it here using just the image name (no n
 
 ### Building your theme
 
-Once your theme is configured, build it using:
+Once your theme is configured, build it using the default gulp task:
 ```
-$ gulp release
+$ gulp
 ```
 
 This will build the theme and spit it out as
