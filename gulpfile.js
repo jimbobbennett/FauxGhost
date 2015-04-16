@@ -14,8 +14,7 @@ var gulp        = require('gulp'),
 // Compile scss Files
 gulp.task('scss', ['clean_dest', 'clean_release', 'clean_zip'], function() {
     return eventstream.concat (
-      gulp.src('src/scss/fauxghost.scss')
-        .pipe(sass({style: 'expanded', quiet: false, cacheLocation: 'src/scss/.sass-cache'}))
+        sass('src/scss/fauxghost.scss',{style: 'expanded', quiet: false, cacheLocation: 'src/scss/.sass-cache'})
         .pipe(gulp.dest('dest/css'))
         .pipe(minifycss())
         .pipe(rename({suffix: '.min'}))
