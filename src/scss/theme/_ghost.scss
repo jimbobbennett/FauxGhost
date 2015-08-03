@@ -36,6 +36,9 @@
 	text-transform: uppercase;
 	opacity: 0.5;
 }
+.at_post_content pre {
+	margin-bottom: 1.25rem;
+}
 .at_featured_post {
 	display: none;
 	.featured & {
