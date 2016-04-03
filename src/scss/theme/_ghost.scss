@@ -50,7 +50,7 @@
 .at_post_share_icon span {
 	font-size: 2rem;
 	margin: 0 3px;
-	color: $showcase_text_color;
+	color: $post_showcase_text_color;
 	text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.3);
 	opacity: 0.5;
 	@include transition(all 0.2s ease-in-out);

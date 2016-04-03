@@ -8,7 +8,6 @@ var fauxGhostConfig = {
     "sharing":
     {
       "facebook": "true",
-      "youtube": "true"
     },
     "socialLinks":
     [

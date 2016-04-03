@@ -144,10 +144,14 @@ ul.off-canvas-list {
 		}
 	}
 	.at_title, .at_subtitle, .at_version,
-	.at_post_title, .at_post_share_title {
-		color: #fff;
+	.at_post_title {
+                color: #fff;
 		text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.3);
 	}
+        .at_post_share_title {
+                color: $post_showcase_text_color;
+		text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.3);
+        }
 	.at_title {
 	    font-size: 4rem;
 		@media #{$small-only} {
