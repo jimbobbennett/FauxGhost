@@ -52,12 +52,12 @@ var fauxGhostConfig = {
           "url": "http://berlinerblockfloetenorchester.ghost.io/about/"
         },
         {
-          "title": "Mitmachen",
-          "url": "http://berlinerblockfloetenorchester.ghost.io/players/"
-        },
-        {
           "title": "Kontakt",
           "url": "http://berlinerblockfloetenorchester.ghost.io/contact/"
+        },
+        {
+          "title": "Mitmachen",
+          "url": "http://berlinerblockfloetenorchester.ghost.io/players/"
         },
         {
           "title": "Impressum",
