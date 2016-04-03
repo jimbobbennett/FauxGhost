@@ -1,47 +1,55 @@
 var fauxGhostConfig = {
-    "site_url": "",
+    "site_url": "http://berlinerblockfloetenorchester.ghost.io/",
     "google_fonts_family": "Open+Sans:400,400italic,700,700italic",
     "google_analytics_tracking_id": "",
     "disqus_shortname": "",
     "highlight_style": "default",
-    "show_author_details": "true",
-    "show_published_by_ghost": "true",
-    "email":
-    {
-      "address": "email@address",
-      "name": "Send Email"
-    },
     "rss": "true",
     "sharing":
     {
-      "twitter": "true",
       "facebook": "true",
-      "googlePlus": "true"
     },
     "socialLinks":
     [
       {
-        "href": "http://twitter.com/",
-        "name": "Twitter",
-        "icon": "fa-twitter-square"
+        "href": "https://www.facebook.com/pages/Berliner-Blockfl%C3%B6tenorchester-BBO/539437959484635?fref=ts",
+        "name": "Facebook",
+        "icon": "fa-facebook-square"
       },
       {
-        "href": "http://github.com/",
-        "name": "GitHub",
-        "icon": "fa-github-square"
+        "href": "https://www.youtube.com/channel/UCZqZoQhc6dwRziq2KbA0Ung",
+        "name": "Youtube",
+        "icon": "fa-youtube-square"
       }
+//      {
+//        "href": "berlinerblockfloetenorchester@web.de",
+//        "name": "Mail",
+//        "icon": "fa-envelope"
+//      }
     ],
     "sidebar":
     {
-      "title": "Main Menu",
+      "title": "Menü",
       "items":
       [
         {
-          "title": "About",
-          "url": "http://ghost.org/",
-          "image": "FauxGhost.png"
+          "title": "Home",
+          "url": "http://berlinerblockfloetenorchester.ghost.io"
+          //"image": "FauxGhost.png"
           //"tag": "technology",
           //"faicon": "fa-desktop"
+        },
+        {
+          "title": "Über uns",
+          "url": "http://berlinerblockfloetenorchester.ghost.io/about/"
+        },
+        {
+          "title": "Kontakt",
+          "url": "http://berlinerblockfloetenorchester.ghost.io/contact/"
+        },
+        {
+          "title": "Mitmachen",
+          "url": "http://berlinerblockfloetenorchester.ghost.io/players/"
         }
       ]
     }
