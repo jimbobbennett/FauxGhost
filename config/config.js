@@ -4,13 +4,6 @@ var fauxGhostConfig = {
     "google_analytics_tracking_id": "",
     "disqus_shortname": "",
     "highlight_style": "default",
-    "show_author_details": "false",
-    "show_published_by_ghost": "false",
-    "email":
-    {
-      "address": "berlinerblockfloetenorchester@web.de",
-      "name": "Send Email"
-    },
     "rss": "true",
     "sharing":
     {
@@ -31,7 +24,7 @@ var fauxGhostConfig = {
       }
 //      {
 //        "href": "berlinerblockfloetenorchester@web.de",
-//        "name": "Youtube",
+//        "name": "Mail",
 //        "icon": "fa-envelope"
 //      }
     ],
@@ -58,10 +51,6 @@ var fauxGhostConfig = {
         {
           "title": "Mitmachen",
           "url": "http://berlinerblockfloetenorchester.ghost.io/players/"
-        },
-        {
-          "title": "Impressum",
-          "url": "http://berlinerblockfloetenorchester.ghost.io/impressum/"
         }
       ]
     }
